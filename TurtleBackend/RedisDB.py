@@ -42,6 +42,4 @@ class RedisDB:
     
     
 if __name__ == "__main__":
-    # redis-17710.c16.us-east-1-2.ec2.cloud.redislabs.com:17710
-    # ITESM-free-db
     #print(db.keys())
