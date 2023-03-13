@@ -1,6 +1,7 @@
 from http.server import BaseHTTPRequestHandler
 from urllib import parse
 import json
+from ..TurtleBackend.Parser import Parser
 
 class handler(BaseHTTPRequestHandler):
     def do_POST(self):
@@ -16,12 +17,18 @@ class handler(BaseHTTPRequestHandler):
         textInput = text["text"]
         print(textInput)
         print(text)
+        parser = Parser()
+        parser.parse(textInput)
+        parser.execute()
+        parser.save("temp.svg")
         response = 200
         self.send_response(response)
-        self.send_header('Content-type','text/html')
+        # res the svg file
+        self.send_header('Content-type','image/svg+xml')
         self.end_headers()
-        self.wfile.write(bytes(textInput, "utf8"))
-        #self.wfile.write(bytes("Hello World !", "utf8"))
+        with open("temp.svg", "r") as f:
+            svg = f.read()
+        self.wfile.write(bytes(svg, "utf8"))
         return
     
 
