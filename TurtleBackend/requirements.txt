@@ -1,0 +1,6 @@
+svg_turtle
+redis
+json
+dotenv
+os
+flask
