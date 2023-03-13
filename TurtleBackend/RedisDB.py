@@ -16,7 +16,7 @@ class RedisDB:
         r = redis.Redis(connection_pool=self.pool)
         r.set(key, value)
 
-    def get(self, key) -> str:
+    def get(self, key) -> (bytes | None):
         r = redis.Redis(connection_pool=self.pool)
         return r.get(key)
     
@@ -28,7 +28,7 @@ class RedisDB:
         r = redis.Redis(connection_pool=self.pool)
         return r.exists(key)
     
-    def keys(self) -> list:
+    def keys(self) -> list[bytes]:
         r = redis.Redis(connection_pool=self.pool)
         return r.keys()
     
@@ -52,6 +52,7 @@ if __name__ == "__main__":
     password = os.getenv("REDIS_PASSWORD")
     redisDB = RedisDB(host, port, db, username, password)
     redisDB.set("test", "test")
+    print(redisDB.keys())
     print(redisDB.get("test"))
     print(redisDB.get_all_json())
     pass

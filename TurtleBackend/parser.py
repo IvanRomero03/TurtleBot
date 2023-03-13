@@ -33,13 +33,14 @@ class Parser:
         elif commandName == "lp": # limpiar pantalla
             self.query.append(lambda: self.turtle.clear())
         elif commandName == "cc": # Cambiar color 
-            self.query.append(lambda: self.turtle.pencolor(int(commandArgs[0])))
+            self.query.append(lambda: self.turtle.pencolor(commandArgs[0]))
     
     def parse(self, text: str):
         splittedText = text.split(" ")
         print(splittedText)
         currentCommand = ""
         currentCommandArgs = []
+        stringQuery = []
         while splittedText:
             print(splittedText)
             lexema = splittedText.pop(0)
@@ -47,10 +48,12 @@ class Parser:
                 for i in range(lexema_nArgs[lexema]):
                     currentCommandArgs.append(splittedText.pop(0))
                 self.queryArgToCommand(lexema, currentCommandArgs)
+                stringQuery.append(lexema + " " + " ".join(currentCommandArgs))
                 currentCommandArgs = []
             else:
                 print("Error: Lexema no reconocido")
                 break
+        return stringQuery
                 
     def execute(self):
         for command in self.query:
@@ -66,7 +69,7 @@ if __name__ == "__main__":
     parser.parse("go 100 gd 90 go 100 gd 90 go 100")
     parser.execute()
     parser.save("temp10.svg")
-    
+
 
 
 
